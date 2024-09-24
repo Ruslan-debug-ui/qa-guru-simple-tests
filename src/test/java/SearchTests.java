@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.Map;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.withText;
@@ -37,6 +40,17 @@ public class SearchTests {
     static void setUp() {
         Configuration.holdBrowserOpen = false;
         Configuration.pageLoadStrategy = "eager";
+        Configuration.browser = "chrome";
+        Configuration.browserVersion = "100.0";
+        Configuration.browserSize = "1920x1080";
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                "enableVNC", true,
+                "enableVideo", true
+        ));
+
+        Configuration.browserCapabilities = capabilities;
 //        Configuration.baseUrl = "https://demoqa.com";
 //        Configuration.browserSize = "1920x1080";
     }
@@ -44,7 +58,6 @@ public class SearchTests {
     @BeforeEach
     void eachUp() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        open();
     }
 
 
