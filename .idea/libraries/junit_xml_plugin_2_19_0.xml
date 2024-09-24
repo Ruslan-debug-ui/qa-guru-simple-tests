@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="junit-xml-plugin-2.19.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/allure/commandline/plugins/junit-xml-plugin/junit-xml-plugin-2.19.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
