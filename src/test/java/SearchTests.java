@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.time.Duration;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,13 +27,11 @@ public class SearchTests {
     }
 
     public void logOut () {
-        //open("https://school.qa.guru");
-      //  $("[name=email]").setValue("zuloo@mail.ru");
-      //  $("[name=password]").setValue("Ruslan12%");
+
         $("a[title='Профиль'] > .menu-item-icon").click();
-        sleep(1000);
+        $(".menu-item-logout > .subitem-link").shouldBe(visible, Duration.ofSeconds(3));
         $(".menu-item-logout > .subitem-link").click();
-        sleep(1000);
+
     }
 
 
@@ -43,14 +43,14 @@ public class SearchTests {
         Configuration.browser = "chrome";
         Configuration.browserVersion = "100.0";
         Configuration.browserSize = "1920x1080";
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
+        //       Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        //DesiredCapabilities capabilities = new DesiredCapabilities();
+        //capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+          //      "enableVNC", true,
+          //      "enableVideo", true
+        //));
 
-        Configuration.browserCapabilities = capabilities;
+//        Configuration.browserCapabilities = capabilities;
 //        Configuration.baseUrl = "https://demoqa.com";
 //        Configuration.browserSize = "1920x1080";
     }
@@ -125,6 +125,25 @@ public class SearchTests {
     }
 
     @Test
+    void positiveProfileItems() {
+
+        logIn();
+        $("a[title='Профиль'] > .menu-item-icon").click();
+        $(withText("Профиль")).should(Condition.exist);
+        $(withText("Монеты")).should(Condition.exist);
+        $(withText("Депозит")).should(Condition.exist);
+        $(withText("Бонусный счет")).should(Condition.exist);
+        $(withText("Уведомления")).should(Condition.exist);
+        $(withText("Сменить пароль")).should(Condition.exist);
+        $(withText("Выйти")).should(Condition.exist);
+        $(withText("Мои аккаунты")).should(Condition.exist);
+        logOut();
+
+    }
+
+
+
+    @Test
     void positiveSupport() {
 
     //    boolean w = true;
@@ -146,6 +165,22 @@ public class SearchTests {
         logOut();
 
     }
+
+    @Test
+    void positiveLogOut() {
+
+        logIn();
+        logOut();
+        $(withText("Войти")).should(Condition.exist);
+        $(withText("Регистрация")).should(Condition.exist);
+        $(withText("Восстановить пароль")).should(Condition.exist);
+        $(withText("Обратная связь")).should(Condition.exist);
+
+    }
+
+
+
+
 
 
 }
