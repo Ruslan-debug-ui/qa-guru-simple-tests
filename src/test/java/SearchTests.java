@@ -1,5 +1,6 @@
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,8 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.time.Duration;
 import java.util.Map;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -131,6 +131,7 @@ public class SearchTests {
         $("a[title='Профиль'] > .menu-item-icon").click();
         $(withText("Профиль")).should(Condition.exist);
         $(withText("Монеты")).should(Condition.exist);
+        $("p:nth-of-type(1) > b").shouldHave(text("0"));
         $(withText("Депозит")).should(Condition.exist);
         $(withText("Бонусный счет")).should(Condition.exist);
         $(withText("Уведомления")).should(Condition.exist);
